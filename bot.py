@@ -9,3 +9,11 @@ def url(message):
     btn1 = types.InlineKeyboardButton(text='crt works website', url='https://crt.works/')
     markup.add(btn1)
     bot.send_message(message.from_user.id, "Click button to visit our website!", reply_markup=markup)
+
+#TODO:
+@bot.message_handler(content_types=['text'])
+def get_text_messages(message):
+    pass
+
+
+bot.polling(non_stop=True, interval=0)
