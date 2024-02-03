@@ -3,6 +3,7 @@ from telebot import types
 
 bot = telebot.TeleBot('BOT-TOKEN')
 
+
 @bot.message_handler(commands=['start'])
 def url(message):
     markup = types.InlineKeyboardMarkup()
@@ -10,7 +11,8 @@ def url(message):
     markup.add(btn1)
     bot.send_message(message.from_user.id, "Click button to visit our website!", reply_markup=markup)
 
-#TODO:
+
+# TODO:
 @bot.message_handler(content_types=['text'])
 def get_text_messages(message):
     pass
