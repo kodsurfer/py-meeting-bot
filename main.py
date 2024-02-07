@@ -3,6 +3,8 @@ import aiogram
 from aiogram import types,Bot
 from aiogram.dispatcher import Dispatcher
 from aiogram.utils import executor
+import sqlite3
+import time
 
 bot = Bot(token="BOT-TOKEN")
 dp = Dispatcher(bot)
