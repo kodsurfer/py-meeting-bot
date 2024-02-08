@@ -1,26 +1,25 @@
 import random
-import aiogram
-from aiogram import types,Bot
+
+from aiogram import types, Bot
 from aiogram.dispatcher import Dispatcher
 from aiogram.utils import executor
-import sqlite3
-import time
 
 bot = Bot(token="BOT-TOKEN")
 dp = Dispatcher(bot)
 
+
 @dp.message_handler(commands=['all'])
 async def process_show_users(message: types.Message):
-    users_id = [random.randint(1000000,2000000) for i in range (10)]
+    users_id = [random.randint(1000000, 2000000) for i in range(10)]
     mesg_id = ""
     for index, id in enumerate(users_id):
-        msg += f"[User {index+1}](tg://user?id={id})\n"
-    
+        msg += f"[User {index + 1}](tg://user?id={id})\n"
+
     await message.answer(text=msg, parse_mode="MarkdownV2")
+
 
 if __name__ == "__main__":
     executor.start_polling(dp, skip_updates=True)
-
 
 '''
    import logging
