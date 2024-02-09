@@ -1,11 +1,14 @@
 import sqlite3
-import telebot
-from telebot import types
 
-bot = telebot.TeleBot('BOT-TOKEN')
+from aiogram import types, Bot
+from aiogram.dispatcher import Dispatcher
+from aiogram.utils import executor
+
+bot = Bot(token="BOT-TOKEN")
+dp = Dispatcher(bot)
 
 
-@bot.message_handler(commands=['start'])
+@dp.message_handler(commands=['start'])
 def url(message):
     markup = types.InlineKeyboardMarkup()
     btn1 = types.InlineKeyboardButton(text='website', url='https://ya.ru/')
@@ -14,7 +17,7 @@ def url(message):
 
 
 # TODO:
-@bot.message_handler(content_types=['text'])
+@dp.message_handler(content_types=['text'])
 def get_text_messages(message):
     pass
 
@@ -26,9 +29,15 @@ def db():
     con.commit()
 
 
-@bot.message_handler(content_types=['add'])
-def add_reserve(reserve):
-    pass
+@dp.message_handler(content_types=['add'])
+def add_reserve(message):
+    con = sqlite3.connect('meetings.db')
+    cur = con.cursor()
+    cur.execute('INSERT INTO meetings(time_period text, user_id integer) VALUES(?, ?)',
+                (message.chat.id, message.from_user.id))
+    con.commit()
+    await message.reply(text='Добавил reserve')
 
 
-bot.polling(non_stop=True, interval=0)
+if __name__ == "__main__":
+    executor.start_polling(dp, skip_updates=True)
