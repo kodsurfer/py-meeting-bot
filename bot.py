@@ -23,7 +23,8 @@ def db():
     con = sqlite3.connect("meetings.db")
     cr = con.cursor()
     cr.execute("create table if not exists meetings(id integer, time_period text, user_id integer)")
-    cr.commit()
+    con.commit()
+
 
 @bot.message_handler(content_types=['add'])
 def add_reserve(reserve):
