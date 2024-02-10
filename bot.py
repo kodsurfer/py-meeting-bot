@@ -39,5 +39,15 @@ def add_reserve(message):
     await message.reply(text='Добавил reserve')
 
 
+@dp.message_handler(content_types=['free'])
+def free_reserve(message):
+    con = sqlite3.connect('meetings.db')
+    cur = con.cursor()
+    cur.execute('DELETE FROM meetings(time_period text, user_id integer) WHERE time_period=? AND  user_id=?)',
+                (message.chat.id, message.from_user.id))
+    con.commit()
+    await message.reply(text='Free reserve')
+
+
 if __name__ == "__main__":
     executor.start_polling(dp, skip_updates=True)
